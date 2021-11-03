@@ -1,4 +1,4 @@
-docker build -t cron-in-docker2 .
-docker rm -f test2
-docker run -d --name test2 cron-in-docker2
-docker exec -it test2 bash
+docker build -t cron-test .
+docker rm -f cron-test
+docker run -d --name cron-test cron-test
+docker exec -it cron-test bash

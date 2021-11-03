@@ -1,11 +1,17 @@
-FROM ubuntu:18.04
+FROM ubuntu:latest
 
-RUN apt-get update
-RUN apt-get install -y cron rsyslog locales python3
+ENV TZ=Asia/Shanghai \
+    DEBIAN_FRONTEND=noninteractive
+RUN apt update \
+    && apt install -y tzdata \
+    && ln -fs /usr/share/zoneinfo/${TZ} /etc/localtime \
+    && echo ${TZ} > /etc/timezone \
+    && dpkg-reconfigure --frontend noninteractive tzdata
 
-# 解决输出中文编码错误
-RUN locale-gen "en_US.UTF-8"
-ENV LC_ALL="en_US.utf8"
+RUN apt-get install -y cron rsyslog nano python3
+
+RUN apt-get install -y python3-pip 
+RUN pip3 install requests python-dotenv
 
 RUN mkdir /code
 
